@@ -1,0 +1,44 @@
+name: actionlint
+description: actionlint
+author: Shunsuke Suzuki
+inputs:
+  sparse-checkout:
+    required: false
+    description: |
+      sparse checkout
+  actionlint_options:
+    required: false
+    description: |
+      actionlint's command line options such as `-ignore`.
+runs:
+  using: composite
+  steps:
+    # Install actionlint and reviewdog by aqua
+    - run: echo "value=$GITHUB_ACTION_PATH/aqua/aqua.yaml" >> "$GITHUB_OUTPUT"
+      id: aqua_config
+      shell: bash
+    - uses: aquaproj/aqua-installer@e2d0136abcf70b7a2f6f505720640750557c4b33 # v3.1.1
+      with:
+        aqua_version: v2.45.0
+        skip_install_aqua: "true"
+      env:
+        AQUA_CONFIG: ${{ steps.aqua_config.outputs.value }}
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      with:
+        sparse-checkout: ${{inputs.sparse-checkout}}
+        persist-credentials: false
+    - uses: suzuki-shunsuke/github-action-actionlint@4f0298e8f8b13fffbdc13207463d65e92205ad0c # v0.1.5
+      if: |
+        github.event_name != 'pull_request' || ! github.event.pull_request.head.repo.fork
+      with:
+        actionlint_options: ${{inputs.actionlint_options}}
+    - shell: bash
+      if: |
+        github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork
+      env:
+        AQUA_GITHUB_TOKEN: ${{github.token}}
+        ACTIONLINT_OPTIONS: ${{inputs.actionlint_options}}
+      run: |
+        set -euo pipefail
+        # shellcheck disable=SC2086
+        actionlint $ACTIONLINT_OPTIONS
