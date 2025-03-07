@@ -32,29 +32,29 @@ runs:
         github.event_name != 'pull_request' || ! github.event.pull_request.head.repo.fork
       shell: bash
       env:
-        AQUA_CONFIG: ${{ steps.aqua_config.outputs.value }}
+        AQUA_GLOBAL_CONFIG: ${{env.AQUA_GLOBAL_CONFIG}}:${{ steps.aqua_config.outputs.value }}
     - run: shellcheck -V
       shell: bash
       env:
-        AQUA_CONFIG: ${{ steps.aqua_config.outputs.value }}
+        AQUA_GLOBAL_CONFIG: ${{env.AQUA_GLOBAL_CONFIG}}:${{ steps.aqua_config.outputs.value }}
     - run: actionlint -version
       shell: bash
       env:
-        AQUA_CONFIG: ${{ steps.aqua_config.outputs.value }}
+        AQUA_GLOBAL_CONFIG: ${{env.AQUA_GLOBAL_CONFIG}}:${{ steps.aqua_config.outputs.value }}
     - uses: suzuki-shunsuke/github-action-actionlint@4f0298e8f8b13fffbdc13207463d65e92205ad0c # v0.1.5
       if: |
         github.event_name != 'pull_request' || ! github.event.pull_request.head.repo.fork
       with:
         actionlint_options: ${{inputs.actionlint_options}}
       env:
-        AQUA_CONFIG: ${{ steps.aqua_config.outputs.value }}
+        AQUA_GLOBAL_CONFIG: ${{env.AQUA_GLOBAL_CONFIG}}:${{ steps.aqua_config.outputs.value }}
     - shell: bash
       if: |
         github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork
       env:
         AQUA_GITHUB_TOKEN: ${{github.token}}
         ACTIONLINT_OPTIONS: ${{inputs.actionlint_options}}
-        AQUA_CONFIG: ${{ steps.aqua_config.outputs.value }}
+        AQUA_GLOBAL_CONFIG: ${{env.AQUA_GLOBAL_CONFIG}}:${{ steps.aqua_config.outputs.value }}
       run: |
         set -euo pipefail
         # shellcheck disable=SC2086
