@@ -27,6 +27,10 @@ runs:
       with:
         sparse-checkout: ${{inputs.sparse-checkout}}
         persist-credentials: false
+    - run: reviewdog -version
+      shell: bash
+      env:
+        AQUA_CONFIG: ${{ steps.aqua_config.outputs.value }}
     - run: shellcheck -V
       shell: bash
       env:
