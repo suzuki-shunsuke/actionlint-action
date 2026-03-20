@@ -1,6 +1,7 @@
 # actionlint-action
 
-[![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/suzuki-shunsuke/actionlint-action/main/LICENSE) | [action.yaml](action.yaml)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/suzuki-shunsuke/actionlint-action)
+[![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/suzuki-shunsuke/actionlint-action/main/LICENSE) [action.yaml](action.yaml)
 
 `actionlint-action` is a GitHub Action to run actionlint.
 
