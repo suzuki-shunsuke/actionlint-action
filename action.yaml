@@ -21,7 +21,7 @@ runs:
             - .github/workflows/*.yml
             - .github/workflows/*.yaml
     - if: steps.changes.outputs.value == 'true'
-      uses: suzuki-shunsuke/actionlint-action-main@a907b52db22a289b4cb7242fc39e1ccc02394465 # v0.0.8
+      uses: suzuki-shunsuke/actionlint-action-main@60f81bc46d90656115e471142983a79a26020616 # v0.0.9
       with:
         sparse-checkout: ${{inputs.sparse-checkout}}
         actionlint_options: ${{inputs.actionlint_options}}
