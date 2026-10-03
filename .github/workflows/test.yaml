@@ -27,3 +27,8 @@ jobs:
       - uses: ./
         with:
           ignores: file "dist/index.js" does not exist
+      - uses: ./
+        with:
+          ignores: file "dist/index.js" does not exist
+          shellcheck: ""
+          pyflakes: ""
