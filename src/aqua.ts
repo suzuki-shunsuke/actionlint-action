@@ -2,10 +2,10 @@ import * as core from "@actions/core";
 import * as exec from "@actions/exec";
 import * as tc from "@actions/tool-cache";
 import { createHash } from "crypto";
-import { chmod, readFile, rm } from "fs/promises";
+import { chmod, copyFile, readFile, rename, rm } from "fs/promises";
 import { join, dirname } from "path";
 import { arch, homedir, platform, tmpdir } from "os";
-import { mkdtempSync, existsSync, renameSync, mkdirSync } from "fs";
+import { mkdtempSync, existsSync, mkdirSync } from "fs";
 import { fileURLToPath } from "node:url";
 
 const Version = "v2.56.2";
@@ -272,7 +272,18 @@ export const install = async (): Promise<string> => {
     const aquaBinaryPath = join(extractedPath, isWindows ? "aqua.exe" : "aqua");
     await chmod(aquaBinaryPath, 0o755);
     mkdirSync(installDir, { recursive: true });
-    renameSync(aquaBinaryPath, installPath);
+    // tempDir and installDir can be on different file systems (e.g. /tmp is tmpfs),
+    // so rename fails with EXDEV. Copy the binary to installDir first and rename it
+    // in the same file system so that a partially written file is never installed.
+    const tempInstallPath = `${installPath}.${process.pid}.tmp`;
+    try {
+      await copyFile(aquaBinaryPath, tempInstallPath);
+      await chmod(tempInstallPath, 0o755);
+      await rename(tempInstallPath, installPath);
+    } catch (error) {
+      await rm(tempInstallPath, { force: true });
+      throw error;
+    }
     return installDir;
   } finally {
     await rm(tempDir, { recursive: true, force: true });
