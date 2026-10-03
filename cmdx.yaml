@@ -1,0 +1,42 @@
+---
+# cmdx - task runner
+# https://github.com/suzuki-shunsuke/cmdx
+tasks:
+  - name: release
+    short: r
+    description: release the new version
+    usage: release the new version
+    script: rjsa "$VERSION" "$PR"
+    args:
+      - name: version
+        required: true
+        validate:
+          - regexp: "^v\\d+\\.\\d+.\\d+(-\\d+)?$"
+        script_envs:
+          - version
+      - name: pr
+        required: false
+        validate:
+          - regexp: "^\\d+$"
+        script_envs:
+          - pr
+  - name: build
+    description: build TypeScript
+    usage: build TypeScript
+    script: |
+      set -eu
+      npm ci
+      npm run build
+  - name: test
+    short: t
+    description: Test
+    usage: Test
+    script: |
+      set -eu
+      npm ci
+      npm t
+      npm run lint
+  - name: fmt
+    description: Format with prettier
+    usage: Format with prettier
+    script: npm run fmt

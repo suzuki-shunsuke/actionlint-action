@@ -1,0 +1,94 @@
+{
+  "checksums": [
+    {
+      "id": "github_release/github.com/kjanat/actionlint/v1.17.0/actionlint_1.17.0_darwin_amd64.tar.gz",
+      "checksum": "E5FA505C0236666F2B1F36A2852DB5FAD6E186E9125BABEE017538A4049E3AFB",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/kjanat/actionlint/v1.17.0/actionlint_1.17.0_darwin_arm64.tar.gz",
+      "checksum": "F123B7AD57A0FE376DCC85E81B7E04E85EB39219184803FC25F989B255F569B4",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/kjanat/actionlint/v1.17.0/actionlint_1.17.0_linux_amd64.tar.gz",
+      "checksum": "620ABD485A12B6AB1125B844A876414E1D5BD2AF8A3125B27F82B01D0D9D6E5A",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/kjanat/actionlint/v1.17.0/actionlint_1.17.0_linux_arm64.tar.gz",
+      "checksum": "9BE067D6B6E2F455FD0144850520B4B1114A0A792CA6E003302C939792589345",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/kjanat/actionlint/v1.17.0/actionlint_1.17.0_windows_amd64.zip",
+      "checksum": "503A7649A97C5AFB07AA51703B94066C9F63B5EABC25C55A6860EABD5298D559",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/kjanat/actionlint/v1.17.0/actionlint_1.17.0_windows_arm64.zip",
+      "checksum": "56CE996209D274833A718C940D065361620C3A9F152143E84F3357670911102D",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/koalaman/shellcheck/v0.11.0/shellcheck-v0.11.0.darwin.aarch64.tar.xz",
+      "checksum": "56AFFDD8DE5527894DCA6DC3D7E0A99A873B0F004D7AABC30AE407D3F48B0A79",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/koalaman/shellcheck/v0.11.0/shellcheck-v0.11.0.darwin.x86_64.tar.xz",
+      "checksum": "3C89DB4EDCAB7CF1C27BFF178882E0F6F27F7AFDF54E859FA041FCA10FEBE4C6",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/koalaman/shellcheck/v0.11.0/shellcheck-v0.11.0.linux.aarch64.tar.xz",
+      "checksum": "12B331C1D2DB6B9EB13CFCA64306B1B157A86EB69DB83023E261EAA7E7C14588",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/koalaman/shellcheck/v0.11.0/shellcheck-v0.11.0.linux.x86_64.tar.xz",
+      "checksum": "8C3BE12B05D5C177A04C29E3C78CE89AC86F1595681CAB149B65B97C4E227198",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/koalaman/shellcheck/v0.11.0/shellcheck-v0.11.0.zip",
+      "checksum": "8A4E35AB0B331C85D73567B12F2A444DF187F483E5079CEFFA6BDA1FAA2E740E",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/reviewdog/reviewdog/v0.21.1/reviewdog_0.21.1_Darwin_arm64.tar.gz",
+      "checksum": "F5DB4AFA2B67666C69D14D4A33677D81941D011581DBD7649010C1766B578F6A",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/reviewdog/reviewdog/v0.21.1/reviewdog_0.21.1_Darwin_x86_64.tar.gz",
+      "checksum": "1A7DFB9DB22266A2D02EBC10712A666E31606751F9F4D37F3C419353248F085B",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/reviewdog/reviewdog/v0.21.1/reviewdog_0.21.1_Linux_arm64.tar.gz",
+      "checksum": "47779FB16FED17A12940D1EE42894F98D34300BDAC46FB334CEA2B3C0530C482",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/reviewdog/reviewdog/v0.21.1/reviewdog_0.21.1_Linux_x86_64.tar.gz",
+      "checksum": "E70AED7F3617605EACCDEEBA71042BABEE65DB5268D82C0F6601ED605944B5FE",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/reviewdog/reviewdog/v0.21.1/reviewdog_0.21.1_Windows_arm64.tar.gz",
+      "checksum": "5EE3EAD188A6521EBA614CA679A4F3A4AD5AD983BBB7118DF7DBBF20E30EA5FC",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/reviewdog/reviewdog/v0.21.1/reviewdog_0.21.1_Windows_x86_64.tar.gz",
+      "checksum": "0CC0693BB07946A249828476E47643CF5F39C7FF0911C6E95D89F9748ED1347B",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.563.0/registry.yaml",
+      "checksum": "180F82867167BFB2D7AE40273FFC4CFC613B8A2745BD190BBDE9F817B0B3DEBA",
+      "algorithm": "sha256"
+    }
+  ]
+}

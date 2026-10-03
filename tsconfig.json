@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2023"],
+    "module": "es2022",
+    "moduleResolution": "bundler",
+    "target": "ES2023",
+    "rootDir": "./src",
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    // vitest v5 pulls in tinybench, whose declarations reference DOM types
+    // this project has no reason to enable. Declaration files come from
+    // dependencies, so checking them buys nothing here.
+    "skipLibCheck": true
+  },
+  "exclude": ["node_modules", "eslint.config.ts"]
+}
