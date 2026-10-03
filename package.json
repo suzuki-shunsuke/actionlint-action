@@ -1,0 +1,34 @@
+{
+  "name": "actionlint-action",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "ncc build src/index.ts --license LICENSE",
+    "test": "vitest --run",
+    "test:coverage": "vitest --run --coverage",
+    "fmt": "prettier -w .",
+    "lint": "eslint && tsc --noEmit",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@actions/core": "3.0.1",
+    "@actions/exec": "^3.0.0",
+    "@actions/github": "9.1.1",
+    "@actions/tool-cache": "^4.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.0",
+    "@vercel/ncc": "0.45.0",
+    "eslint": "10.11.0",
+    "globals": "17.12.0",
+    "jiti": "2.7.0",
+    "prettier": "3.9.9",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.0",
+    "vitest": "5.0.2"
+  },
+  "volta": {
+    "node": "24.21.0"
+  }
+}
