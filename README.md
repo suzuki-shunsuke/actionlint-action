@@ -16,20 +16,8 @@ mkdir -p .github/workflows
 curl -Lq -o .github/workflows/actionlint.yaml https://raw.githubusercontent.com/suzuki-shunsuke/actionlint-action/refs/heads/main/.github/workflows/actionlint.yaml
 ```
 
+See [.github/workflows/actionlint.yaml](.github/workflows/actionlint.yaml).
 You need to checkout the repository before running this action.
-
-```yaml
-steps:
-  - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-    with:
-      persist-credentials: false
-  - uses: suzuki-shunsuke/actionlint-action@main
-    with:
-      # Optional
-      ignores: |
-        file "dist/index.js" does not exist
-        SC2086
-```
 
 ## Inputs
 
