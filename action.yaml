@@ -9,7 +9,7 @@ inputs:
       GitHub Access Token.
       pull-requests:write - Post review comments by reviewdog
       checks:write - Create check runs by reviewdog if the event isn't pull_request
-  config-file:
+  config_file:
     required: false
     description: |
       actionlint's configuration file path

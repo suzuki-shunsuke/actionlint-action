@@ -34,7 +34,7 @@ steps:
 ## Inputs
 
 - `github_token`: GitHub Access Token. The default is `github.token`. `pull-requests:write` is required to post review comments
-- `config-file`: actionlint's `-config-file` option
+- `config_file`: actionlint's `-config-file` option
 - `ignores`: actionlint's `-ignore` options. Each line is passed as a separate `-ignore` option
 - `pyflakes`: actionlint's `-pyflakes` option. The default is `pyflakes`. If empty, pyflakes integration is disabled
 - `shellcheck`: actionlint's `-shellcheck` option. The default is `shellcheck`. If empty, shellcheck integration is disabled
@@ -44,4 +44,4 @@ steps:
 - This action was rewritten as a JavaScript Action
 - This action no longer checks out the repository. Please run `actions/checkout` before this action
 - The input `sparse-checkout` was removed
-- The input `actionlint_options` was removed. Use `config-file`, `ignores`, `pyflakes`, and `shellcheck` instead
+- The input `actionlint_options` was removed. Use `config_file`, `ignores`, `pyflakes`, and `shellcheck` instead

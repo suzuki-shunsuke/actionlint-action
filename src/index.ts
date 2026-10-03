@@ -12,7 +12,7 @@ const main = async (): Promise<void> => {
     executor,
     githubToken,
     actionlintOptions: {
-      configFile: core.getInput("config-file"),
+      configFile: core.getInput("config_file"),
       ignores: splitLines(core.getInput("ignores")),
       pyflakes: core.getInput("pyflakes"),
       shellcheck: core.getInput("shellcheck"),
