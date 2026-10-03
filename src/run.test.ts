@@ -10,7 +10,6 @@ import type { ExecOptions } from "./aqua";
 
 const newLogger = () => ({
   info: vi.fn(),
-  error: vi.fn(),
   startGroup: vi.fn(),
   endGroup: vi.fn(),
   writeSummary: vi.fn().mockResolvedValue(undefined),

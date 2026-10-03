@@ -17,7 +17,6 @@ export type Executor = {
 
 export type Logger = {
   info: (message: string) => void;
-  error: (message: string) => void;
   startGroup: (name: string) => void;
   endGroup: () => void;
   writeSummary: (content: string) => Promise<void>;
@@ -78,7 +77,6 @@ export const buildActionlintArgs = (options: ActionlintOptions): string[] => {
 
 const defaultLogger: Logger = {
   info: core.info,
-  error: core.error,
   startGroup: core.startGroup,
   endGroup: core.endGroup,
   writeSummary: async (content: string) => {
@@ -168,7 +166,6 @@ export const run = async (input: RunInput): Promise<void> => {
     return;
   }
 
-  logger.error("actionlint failed");
   const body = [out.stdout, out.stderr].join("\n").trim();
   if (body.length > 0) {
     await logger.writeSummary(`## actionlint\n\n\`\`\`\n${body}\n\`\`\`\n`);
