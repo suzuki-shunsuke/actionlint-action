@@ -26,16 +26,22 @@ steps:
   - uses: suzuki-shunsuke/actionlint-action@main
     with:
       # Optional
-      actionlint_options: -ignore foo
+      ignores: |
+        file "dist/index.js" does not exist
+        SC2086
 ```
 
 ## Inputs
 
 - `github_token`: GitHub Access Token. The default is `github.token`. `pull-requests:write` is required to post review comments
-- `actionlint_options`: actionlint's command line options such as `-ignore`
+- `config-file`: actionlint's `-config-file` option
+- `ignores`: actionlint's `-ignore` options. Each line is passed as a separate `-ignore` option
+- `pyflakes`: actionlint's `-pyflakes` option. The default is `pyflakes`. If empty, pyflakes integration is disabled
+- `shellcheck`: actionlint's `-shellcheck` option. The default is `shellcheck`. If empty, shellcheck integration is disabled
 
 ## Breaking Changes from v0.1
 
 - This action was rewritten as a JavaScript Action
 - This action no longer checks out the repository. Please run `actions/checkout` before this action
 - The input `sparse-checkout` was removed
+- The input `actionlint_options` was removed. Use `config-file`, `ignores`, `pyflakes`, and `shellcheck` instead

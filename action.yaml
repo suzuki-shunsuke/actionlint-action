@@ -9,10 +9,27 @@ inputs:
       GitHub Access Token.
       pull-requests:write - Post review comments by reviewdog
       checks:write - Create check runs by reviewdog if the event isn't pull_request
-  actionlint_options:
+  config-file:
     required: false
     description: |
-      actionlint's command line options such as `-ignore`.
+      actionlint's configuration file path
+  ignores:
+    required: false
+    description: |
+      actionlint's -ignore options.
+      Each line is treated as a separate ignore option.
+  pyflakes:
+    required: false
+    default: pyflakes
+    description: |
+      actionlint's -pyflakes option.
+      If empty, pyflakes integration is disabled.
+  shellcheck:
+    required: false
+    default: shellcheck
+    description: |
+      actionlint's -shellcheck option.
+      If empty, shellcheck integration is disabled.
 runs:
   using: node24
   main: dist/index.js

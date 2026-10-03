@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 import { NewExecutor } from "./aqua";
-import { run } from "./run";
+import { run, splitLines } from "./run";
 
 const main = async (): Promise<void> => {
   const githubToken = core.getInput("github_token");
@@ -11,7 +11,12 @@ const main = async (): Promise<void> => {
   await run({
     executor,
     githubToken,
-    actionlintOptions: core.getInput("actionlint_options"),
+    actionlintOptions: {
+      configFile: core.getInput("config-file"),
+      ignores: splitLines(core.getInput("ignores")),
+      pyflakes: core.getInput("pyflakes"),
+      shellcheck: core.getInput("shellcheck"),
+    },
     eventName: context.eventName,
     isFork:
       context.eventName === "pull_request" && pr?.head?.repo?.fork === true,

@@ -26,8 +26,7 @@ export type Logger = {
 export type RunInput = {
   executor: Executor;
   githubToken: string;
-  /** actionlint's command line options such as `-ignore` */
-  actionlintOptions: string;
+  actionlintOptions: ActionlintOptions;
   eventName: string;
   /** true if the event is pull_request and the pull request is from a fork */
   isFork: boolean;
@@ -44,9 +43,38 @@ const workflowPattern = /^\.github\/workflows\/[^/]+\.ya?ml$/;
 export const hasWorkflowChanges = (files: string[]): boolean =>
   files.some((file) => workflowPattern.test(file));
 
-/** splitOptions splits options by whitespaces like the shell's word splitting of an unquoted variable */
-export const splitOptions = (options: string): string[] =>
-  options.split(/\s+/).filter((s) => s !== "");
+export type ActionlintOptions = {
+  /** -config-file */
+  configFile: string;
+  /** -ignore. Each element is passed as a separate -ignore option */
+  ignores: string[];
+  /** -pyflakes. If empty, pyflakes integration is disabled */
+  pyflakes: string;
+  /** -shellcheck. If empty, shellcheck integration is disabled */
+  shellcheck: string;
+};
+
+/** splitLines splits text by lines and removes empty lines */
+export const splitLines = (text: string): string[] =>
+  text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line !== "");
+
+export const buildActionlintArgs = (options: ActionlintOptions): string[] => {
+  const args: string[] = [];
+  if (options.configFile) {
+    args.push(`-config-file=${options.configFile}`);
+  }
+  for (const ignore of options.ignores) {
+    args.push(`-ignore=${ignore}`);
+  }
+  args.push(
+    `-pyflakes=${options.pyflakes}`,
+    `-shellcheck=${options.shellcheck}`,
+  );
+  return args;
+};
 
 const defaultLogger: Logger = {
   info: core.info,
@@ -79,7 +107,7 @@ export const run = async (input: RunInput): Promise<void> => {
   await executor.exec("shellcheck", ["-V"]);
   await executor.exec("actionlint", ["-version"]);
 
-  const actionlintArgs = splitOptions(input.actionlintOptions);
+  const actionlintArgs = buildActionlintArgs(input.actionlintOptions);
 
   if (!useReviewdog) {
     // reviewdog can't post reviews to pull requests from forks

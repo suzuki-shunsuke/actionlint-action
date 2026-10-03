@@ -1,5 +1,11 @@
 import { describe, it, expect, vi } from "vitest";
-import { run, hasWorkflowChanges, splitOptions, type RunInput } from "./run";
+import {
+  run,
+  hasWorkflowChanges,
+  splitLines,
+  buildActionlintArgs,
+  type RunInput,
+} from "./run";
 import type { ExecOptions } from "./aqua";
 
 const newLogger = () => ({
@@ -49,7 +55,12 @@ const newInput = (
 ): RunInput => ({
   executor,
   githubToken: "token",
-  actionlintOptions: "",
+  actionlintOptions: {
+    configFile: "",
+    ignores: [],
+    pyflakes: "pyflakes",
+    shellcheck: "shellcheck",
+  },
   eventName: "pull_request",
   isFork: false,
   listChangedFiles: () => Promise.resolve([".github/workflows/test.yaml"]),
@@ -77,13 +88,48 @@ describe("hasWorkflowChanges", () => {
   });
 });
 
-describe("splitOptions", () => {
-  it("splits by whitespaces", () => {
-    expect(splitOptions("")).toEqual([]);
-    expect(splitOptions("  -ignore  foo\n-color ")).toEqual([
-      "-ignore",
-      "foo",
-      "-color",
+describe("splitLines", () => {
+  it("splits by lines and removes empty lines", () => {
+    expect(splitLines("")).toEqual([]);
+    expect(splitLines("  foo bar \n\n baz\n")).toEqual(["foo bar", "baz"]);
+  });
+});
+
+describe("buildActionlintArgs", () => {
+  it("passes default pyflakes and shellcheck", () => {
+    expect(
+      buildActionlintArgs({
+        configFile: "",
+        ignores: [],
+        pyflakes: "pyflakes",
+        shellcheck: "shellcheck",
+      }),
+    ).toEqual(["-pyflakes=pyflakes", "-shellcheck=shellcheck"]);
+  });
+  it("disables pyflakes and shellcheck if they are empty", () => {
+    expect(
+      buildActionlintArgs({
+        configFile: "",
+        ignores: [],
+        pyflakes: "",
+        shellcheck: "",
+      }),
+    ).toEqual(["-pyflakes=", "-shellcheck="]);
+  });
+  it("builds options", () => {
+    expect(
+      buildActionlintArgs({
+        configFile: "actionlint.yaml",
+        ignores: ['file "dist/index.js" does not exist', "SC2086"],
+        pyflakes: "python3 -m pyflakes",
+        shellcheck: "shellcheck -e SC2086",
+      }),
+    ).toEqual([
+      "-config-file=actionlint.yaml",
+      '-ignore=file "dist/index.js" does not exist',
+      "-ignore=SC2086",
+      "-pyflakes=python3 -m pyflakes",
+      "-shellcheck=shellcheck -e SC2086",
     ]);
   });
 });
@@ -110,7 +156,7 @@ describe("run", () => {
     );
     expect(executor.getExecOutput).toHaveBeenCalledWith(
       "actionlint",
-      [],
+      ["-pyflakes=pyflakes", "-shellcheck=shellcheck"],
       expect.anything(),
     );
     expect(findReviewdogCall(executor)?.[1]).toContain("github-check");
@@ -125,10 +171,19 @@ describe("run", () => {
       },
       reviewdogHelp: "  -fail-level string",
     });
-    await run(newInput(executor, { actionlintOptions: "-ignore foo" }));
+    await run(
+      newInput(executor, {
+        actionlintOptions: {
+          configFile: "",
+          ignores: ["foo"],
+          pyflakes: "pyflakes",
+          shellcheck: "shellcheck",
+        },
+      }),
+    );
     expect(executor.getExecOutput).toHaveBeenCalledWith(
       "actionlint",
-      ["-ignore", "foo"],
+      ["-ignore=foo", "-pyflakes=pyflakes", "-shellcheck=shellcheck"],
       expect.objectContaining({ ignoreReturnCode: true }),
     );
     const call = findReviewdogCall(executor);
@@ -184,7 +239,7 @@ describe("run", () => {
     await run(newInput(executor, { isFork: true, githubToken: "" }));
     expect(executor.exec).toHaveBeenCalledWith(
       "actionlint",
-      [],
+      ["-pyflakes=pyflakes", "-shellcheck=shellcheck"],
       expect.objectContaining({ ignoreReturnCode: true }),
     );
     expect(
