@@ -11,30 +11,13 @@
 
 ## How To Use
 
-Create a workflow such as `.github/workflows/actionlint.yaml`.
-You need to checkout the repository before running this action.
-
-```yaml
-name: actionlint
-on: pull_request
-jobs:
-  actionlint:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    permissions:
-      contents: read # For actions/checkout
-      pull-requests: write # For reviewdog to post review comments
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - uses: suzuki-shunsuke/actionlint-action@bbb96e7fa8a7dd46b10ae443f05592eb5c406b5b # v0.2.0
-        with:
-          # Optional
-          ignores: |
-            file "dist/index.js" does not exist
-            SC2086
+```sh
+mkdir -p .github/workflows
+curl -Lq -o .github/workflows/actionlint.yaml https://raw.githubusercontent.com/suzuki-shunsuke/actionlint-action/refs/heads/main/.github/workflows/actionlint.yaml
 ```
+
+See [.github/workflows/actionlint.yaml](.github/workflows/actionlint.yaml).
+You need to checkout the repository before running this action.
 
 ## Inputs
 
