@@ -8,31 +8,31 @@ import { arch, homedir, platform, tmpdir } from "os";
 import { mkdtempSync, existsSync, mkdirSync } from "fs";
 import { fileURLToPath } from "node:url";
 
-const Version = "v2.56.2";
+const Version = "v2.64.0";
 const CHECKSUMS = new Map([
   [
     "aqua_darwin_amd64.tar.gz",
-    "46fb7060a3c94483ff3ea70e48b4bee3793d1d629ccec66050296ea57944af9c",
+    "64bc676871f2fe2683f57371e958963fc5a14b72b03e22b796fa228dcdeb353b",
   ],
   [
     "aqua_darwin_arm64.tar.gz",
-    "a93db5795ca73d878c8bae612cb08c67e0130b1c0926c995fd84fdde08ccc1aa",
+    "f7f7890781bbd8863b04b61eb7bb40fe83add7097243c13da987ae9fb56d93b7",
   ],
   [
     "aqua_linux_amd64.tar.gz",
-    "6ecff5d9f79ed31d3aeab826a15023dce577806a85b563d71975503418c2b34b",
+    "b276e927ee2f4dc214831708c0843a91007bafa06f2f9fcd6ee1fd73fd165598",
   ],
   [
     "aqua_linux_arm64.tar.gz",
-    "158c501f3aa5b97b54acfb3c8e8438cabb3f931929da8265c564badcf872e596",
+    "7cc2b859333f40ef52eb62a1be3bfaa34dcbc27ef1c8bdc5bfaea7787597bc18",
   ],
   [
     "aqua_windows_amd64.zip",
-    "fc3480ee1f43563a3703e853d5e659b2894b5c302ca27781f6c2bad3e337a9b6",
+    "7f8694f6181a01360633c27f8c9c4140d97f4b9d6fb244bad6b5bdfe8b2b7916",
   ],
   [
     "aqua_windows_arm64.zip",
-    "190e2450d4857c497b3bf37a1998c0bb155526da1eea2645f255590c6b0956df",
+    "7fe40a7a6b93cb4494700d39dcc01db9c59c22abd689890e71a6cf88290df3b7",
   ],
 ]);
 
