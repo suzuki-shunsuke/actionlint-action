@@ -7,55 +7,44 @@ on:
         required: true
 permissions: {}
 jobs:
-  jsmodule:
-    timeout-minutes: 15
-    runs-on: ubuntu-26.04
+  release:
+    uses: suzuki-shunsuke/js-action-release-workflow/.github/workflows/release.yaml@89c0f9f455f977a280103a7f450573adac9d8cf6 # v0.0.1
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    secrets:
+      TAKUMI_GUARD_BOT_ID: ${{secrets.TAKUMI_GUARD_BOT_ID}}
+    with:
+      version: pr/${{github.event.pull_request.number}}
+      pr: ${{github.event.pull_request.number}}
+
+  test-js:
+    uses: suzuki-shunsuke/js-action-test-workflow/.github/workflows/test.yaml@8f0b1fefeca5d88fc714b957f9aed1c7e29cae3b # v0.0.1
     permissions:
       contents: read
-      id-token: write # Required for OIDC
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version-file: .node-version
-      - uses: flatt-security/setup-takumi-guard-npm@14f07d0cbc739b42a1b7c70a04c2b84cd1318ddd # v1.4.0
-        with:
-          bot-id: ${{secrets.TAKUMI_GUARD_BOT_ID}}
-      - run: npm ci
+      id-token: write
+    secrets:
+      TAKUMI_GUARD_BOT_ID: ${{secrets.TAKUMI_GUARD_BOT_ID}}
 
-      # Archive node_modules with tar to keep file permissions and symlinks (e.g. node_modules/.bin)
-      - run: tar -cf "$RUNNER_TEMP/node_modules.tar" node_modules
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          path: ${{runner.temp}}/node_modules.tar
-          name: node_modules
-          retention-days: 1
-
+  # Test the action built by the release job
   test:
     runs-on: ubuntu-26.04
-    needs: jsmodule
+    needs: release
     permissions:
       pull-requests: write # For reviewdog
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{needs.release.outputs.sha}}
           persist-credentials: false
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version-file: .node-version
-
+      # The action built by the release job
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
-          name: node_modules
-          path: ${{runner.temp}}
-      - run: tar -xf "$RUNNER_TEMP/node_modules.tar"
+          name: dist
+          path: dist
 
-      - run: npm t
-      - run: npm run lint
-      - run: npm run build
       - uses: ./
         with:
           ignores: file "dist/index.js" does not exist
