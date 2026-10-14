@@ -3,32 +3,22 @@ name: test
 on: pull_request
 permissions: {}
 jobs:
+  # Don't add jobs to this file. Please add jobs to wc_test.yaml.
+  test:
+    uses: ./.github/workflows/wc_test.yaml
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    secrets:
+      TAKUMI_GUARD_BOT_ID: ${{secrets.TAKUMI_GUARD_BOT_ID}}
   status-check:
     runs-on: ubuntu-26.04
-    permissions:
-      pull-requests: write # For reviewdog
-      id-token: write # For Takumi Guard
-    timeout-minutes: 15
+    if: always() && (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled'))
+    timeout-minutes: 10
+    permissions: {}
+    needs:
+      - test
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version-file: .node-version
-          cache: npm
-      - uses: flatt-security/setup-takumi-guard-npm@14f07d0cbc739b42a1b7c70a04c2b84cd1318ddd # v1.4.0
-        with:
-          bot-id: ${{secrets.TAKUMI_GUARD_BOT_ID}}
-      - run: npm ci
-      - run: npm t
-      - run: npm run lint
-      - run: npm run build
-      - uses: ./
-        with:
-          ignores: file "dist/index.js" does not exist
-      - uses: ./
-        with:
-          ignores: file "dist/index.js" does not exist
-          shellcheck: ""
-          pyflakes: ""
+      - run: exit 1
+  # Don't add jobs to this file. Please add jobs to wc_test.yaml.
