@@ -20,7 +20,7 @@ jobs:
       pr: ${{github.event.pull_request.number}}
 
   test-js:
-    uses: suzuki-shunsuke/js-action-test-workflow/.github/workflows/test.yaml@8f0b1fefeca5d88fc714b957f9aed1c7e29cae3b # v0.0.1
+    uses: suzuki-shunsuke/js-action-test-workflow/.github/workflows/test.yaml@93619ca5c984cc300f209f5b71cc3284838323b5 # v0.0.2
     permissions:
       contents: read
       id-token: write
